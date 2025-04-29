@@ -34,6 +34,17 @@ router.get('/category', (req, res) => {
     })
 })
 
+
+router.delete('/category/:id', (req,res)=>{
+    const id = req.params.id;
+    const sql = `DELETE  FROM  category where id  = ?`;
+    
+    con.query(sql, [id],(err,result)=>{
+        if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+});
+
 router.post('/add_category', (req, res) => {
     const sql = "INSERT INTO category (`name`) VALUES (?)"
     con.query(sql, [req.body.category], (err, result) => {

@@ -39,6 +39,10 @@ router.post("/employee_login", (req, res) => {
     })
   })
 
+
+  // router.patch('/')
+
+
   router.get('/logout', (req, res) => {
     res.clearCookie('token')
     return res.json({Status: true})

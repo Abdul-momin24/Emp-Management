@@ -17,6 +17,23 @@ const Category = () => {
       }).catch(err => console.log(err))
   }, [])
 
+
+  const handleDelete = (id) =>{
+    
+      console.log(id);
+      axios.delete(`http://localhost:3000/auth/category/${id}`)
+      .then(result =>{
+        if(result.data.Status){
+          setCategory(prev => prev.filter(cat => cat.id !== id));
+          alert("CAtegory deleted Succefully");
+        }else{
+          alert("Error in deleting")
+        }
+      }).catch(err =>console.log(err))
+
+  }
+
+
   return (
     <div className='px-5 mt-3'>
       <div className='flex justify-center'>
@@ -49,7 +66,7 @@ const Category = () => {
         {c.name}
       </div>
       <div className="w-1/2  flex justify-center items-center p-2">
-        <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+        <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" onClick={() =>{handleDelete(c.id)}}>
           DELETE
         </button>
       </div>
