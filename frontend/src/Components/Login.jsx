@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './style.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,8 +6,6 @@ const Login = () => {
     const [values, setValues] = useState({ email: '', password: '' });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const [loginErr, setLoginErr] = useState(null);
-
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (event) => {
@@ -22,34 +19,56 @@ const Login = () => {
                     setError(result.data.Error);
                 }
             })
-            .catch(err => setLoginErr(err));
-    }
+            .catch(err => console.log(err));
+    };
 
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <h2 className="login-title">Admin Login</h2>
-                {error && <div className="login-error">{error}</div>}
-                <form onSubmit={handleSubmit}>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        placeholder="Enter Email"
-                        onChange={(e) => setValues({ ...values, email: e.target.value })}
-                        className="login-input"
-                        required
-                    />
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        placeholder="Enter Password"
-                        onChange={(e) => setValues({ ...values, password: e.target.value })}
-                        className="login-input"
-                        required
-                    />
-                    <button type="submit" className="login-button">Login</button>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
+            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+                <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
+                
+                {error && (
+                    <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-sm">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Email</label>
+                        <input
+                            type="email"
+                            placeholder="Enter Email"
+                            onChange={(e) => setValues({ ...values, email: e.target.value })}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <input
+                            type="password"
+                            placeholder="Enter Password"
+                            onChange={(e) => setValues({ ...values, password: e.target.value })}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-md transition"
+                    >
+                        Log in
+                    </button>
+
+                    {error && (
+                        <div className="text-center text-sm text-gray-600 mt-2">
+                            Forgot your password?
+                        </div>
+                    )}
                 </form>
-                {error && <p className="forgot-text">Forgot your password?</p>}
             </div>
         </div>
     );
