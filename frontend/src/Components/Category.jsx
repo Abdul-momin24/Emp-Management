@@ -22,37 +22,43 @@ const Category = () => {
       <div className='flex justify-center'>
         <h3 className="text-2xl font-bold">Category List</h3>
       </div>
+
       <div className="flex items-center justify-center">
-      <Link to="/dashboard/add_category" className='inline-block bg-green-500 text-white px-4 py-2 rounded my-4'>
-        Add Category
-      </Link>
-
-      </div>
-      <div className='mt-3 flex items-center justify-center max-w-screen'>
-        <table className='table-auto w-4/5 rounded-2xl border-2 border-black'>
-          <thead>
-            <tr className="bg-gray-200">
-              <th className=" p-2 text-center ">Name</th>
-              <th className="p-2 text-center ">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              category.map((c, index) => (
-                <tr key={index} className="border-gray-500 border-2 rounded-2xl mr-5 ">
-                  <td className="  p-2 text-xl w-fit text-center ">{c.name}</td>
-                  <td className="p-2 w-fit text-center">
-                    <button className='bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded w-fit'>
-                      DELETE
-                    </button>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <Link to="/dashboard/add_category" className='inline-block bg-green-500 text-white px-4 py-2 rounded my-4'>
+          Add Category
+        </Link>
       </div>
 
+      <div className="mt-3 flex items-center justify-center max-w-screen">
+        <div className="w-4/5 border-2 border-black rounded-2xl overflow-hidden">
+          {/* Header */}
+         <div className="flex bg-gray-200 font-bold w-full items-center  justify-evenly">
+         
+          <div className=" w-1/2  text-center p-2">
+            Name
+          </div>
+          <div className=" w-1/2 text-center  p-2">
+            Action
+          </div>
+      </div>
+
+          {/* Body */}
+{category.map((c, index) => (
+    <div key={index} className="flex border-t-2 border-gray-500 items-center  justify-evenly  w-full ">
+      <div className="w-1/2  text-center p-2  text-xl ">
+        {c.name}
+      </div>
+      <div className="w-1/2  flex justify-center items-center p-2">
+        <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+          DELETE
+        </button>
+      </div>
+    </div>
+  ))
+}
+
+        </div>
+      </div>
     </div>
   )
 }
