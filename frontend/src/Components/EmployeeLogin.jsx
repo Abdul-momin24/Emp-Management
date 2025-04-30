@@ -18,6 +18,7 @@ const EmployeeLogin = () => {
                     localStorage.setItem("valid", true);
                     navigate('/employee_detail/' + result.data.id);
                 } else {
+                    console.log(result.data.Error)
                     setError(result.data.Error);
                 }
             })

@@ -73,6 +73,7 @@ router.post('/add_employee',upload.single('image'), (req, res) => {
     VALUES (?)`;
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
+            console.log(req.body)
         const values = [
             req.body.name,
             req.body.email,

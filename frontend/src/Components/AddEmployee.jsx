@@ -22,6 +22,7 @@ const AddEmployee = () => {
         if (result.data.Status) {
           setCategory(result.data.Result);
         } else {
+          console.log(result.data)
           alert(result.data.Error);
         }
       })
@@ -133,6 +134,7 @@ const AddEmployee = () => {
             <select name="category" id="category" className="form-select"
                 onChange={(e) => setEmployee({...employee, category_id: e.target.value})}>
               {category.map((c) => {
+  
                 return <option value={c.id}>{c.name}</option>;
               })}
             </select>

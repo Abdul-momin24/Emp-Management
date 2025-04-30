@@ -21,11 +21,18 @@ const Start = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm text-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Login As</h2>
+    <>
+     <div className="header bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
+     <div className="div flex items-center justify-center">
+        <h1 className="font-extrabold">EMPLOYEEE MANAGMENT LOGIN PANEL</h1>
+     </div>
+      {/* </div> */}
+
+    <div className="min-h-screen flex  flex-col  items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm text-center h-24">
+        <h2 className="text-2xl font-bold text-gray-800 m-2">Login As</h2>
         
-        <div className="flex justify-between gap-4">
+        <div className="flex justify-between gap-4  mt-5">
           <button
             type="button"
             onClick={() => navigate("/employee_login")}
@@ -43,6 +50,8 @@ const Start = () => {
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 
