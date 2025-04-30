@@ -8,20 +8,30 @@ import path from "path";
 const router = express.Router();
 
 router.post("/adminlogin", (req, res) => {
-  const sql = "SELECT * from admin Where email = ? and password = ?";
-  con.query(sql, [req.body.email, req.body.password], (err, result) => {
-    if (err) return res.json({ loginStatus: false, Error: "Some error found! Try again" });
+  const sql = "SELECT * FROM admin WHERE email = ?";
+  con.query(sql, [req.body.email], (err, result) => {
+    if (err) return res.json({ loginStatus: false, Error: "Query error" });
+
     if (result.length > 0) {
-      const email = result[0].email;
-      const token = jwt.sign(
-        { role: "admin", email: email, id: result[0].id },
-        "jwt_secret_key",
-        { expiresIn: "1d" }
-      );
-      res.cookie('token', token)
-      return res.json({ loginStatus: true });
+      bcrypt.compare(req.body.password, result[0].password, (err, response) => {
+        if (err) return res.json({ loginStatus: false, Error: "Wrong Password" });
+
+        if (response) {
+          const email = result[0].email;
+          const token = jwt.sign(
+            { role: "admin", email: email, id: result[0].id },
+            "jwt_secret_key",
+            { expiresIn: "1d" }
+          );
+
+          res.cookie("token", token);
+          return res.json({ loginStatus: true, id: result[0].id });
+        } else {
+          return res.json({ loginStatus: false, Error: "Wrong email or password" });
+        }
+      });
     } else {
-        return res.json({ loginStatus: false, Error:"wrong email or password" });
+      return res.json({ loginStatus: false, Error: "Wrong email or password" });
     }
   });
 });
@@ -66,6 +76,28 @@ const upload = multer({
     storage: storage
 })
 // end imag eupload 
+
+
+
+router.post("/add_admin",upload.none(), (req, res) => {
+  const sql = `INSERT INTO admin (name,email, password) VALUES (?)`;
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
+    if (err) return res.json({ Status: false, Error: "Hashing Error" });
+
+    const values = [
+    req.body.name,
+    req.body.email,
+    hash,
+    ];
+
+    con.query(sql, [values], (err, result) => {
+        console.log(err)
+      if (err) return res.json({ Status: false, Error: err });
+      return res.json({ Status: true });
+    });
+  });
+});
+
 
 router.post('/add_employee',upload.single('image'), (req, res) => {
     const sql = `INSERT INTO employee 
@@ -132,6 +164,16 @@ router.put('/edit_employee/:id', (req, res) => {
         req.body.category_id
     ]
     con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+
+router.delete("/admin_delete/:id", (req,res)=>{
+    const id = req.params.id;
+     const sql = "delete from admin where id = ?"
+    con.query(sql,[id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })

@@ -3,53 +3,72 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0)
-  const [employeeTotal, setemployeeTotal] = useState(0)
+  const [employeeTotal, setEmployeeTotal] = useState(0)
   const [salaryTotal, setSalaryTotal] = useState(0)
   const [admins, setAdmins] = useState([])
 
   useEffect(() => {
-    adminCount();
-    employeeCount();
-    salaryCount();
-    AdminRecords();
+    adminCount()
+    employeeCount()
+    salaryCount()
+    fetchAdminRecords()
   }, [])
 
-  const AdminRecords = () => {
+  const fetchAdminRecords = () => {
     axios.get('http://localhost:3000/auth/admin_records')
-    .then(result => {
-      if(result.data.Status) {
-        setAdmins(result.data.Result)
-      } else {
-         alert(result.data.Error)
-      }
-    })
+      .then(result => {
+        if (result.data.Status) {
+          setAdmins(result.data.Result)
+        } else {
+          alert(result.data.Error)
+        }
+      })
   }
+
   const adminCount = () => {
     axios.get('http://localhost:3000/auth/admin_count')
-    .then(result => {
-      if(result.data.Status) {
-        setAdminTotal(result.data.Result[0].admin)
-      }
-    })
+      .then(result => {
+        if (result.data.Status) {
+          setAdminTotal(result.data.Result[0].admin)
+        }
+      })
   }
+
   const employeeCount = () => {
     axios.get('http://localhost:3000/auth/employee_count')
-    .then(result => {
-      if(result.data.Status) {
-        setemployeeTotal(result.data.Result[0].employee)
-      }
-    })
+      .then(result => {
+        if (result.data.Status) {
+          setEmployeeTotal(result.data.Result[0].employee)
+        }
+      })
   }
+
   const salaryCount = () => {
     axios.get('http://localhost:3000/auth/salary_count')
-    .then(result => {
-      if(result.data.Status) {
-        setSalaryTotal(result.data.Result[0].salaryOFEmp)
-      } else {
-        alert(result.data.Error)
-      }
-    })
+      .then(result => {
+        if (result.data.Status) {
+          setSalaryTotal(result.data.Result[0].salaryOFEmp)
+        } else {
+          alert(result.data.Error)
+        }
+      })
   }
+
+  // ✅ Moved outside salaryCount
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:3000/auth/admin_delete/${id}`)
+      .then(result => {
+        if (result.data.Status) {
+          setAdmins(prev => prev.filter(admin => admin.id !== id))
+          adminCount();
+          alert("Admin deleted successfully")
+        } else {
+          alert("Error in deleting")
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
   return (
     <div>
       <div className='p-3 d-flex justify-content-around mt-3'>
@@ -89,28 +108,26 @@ const Home = () => {
         <table className='table'>
           <thead>
             <tr>
+              <th>Name</th>
               <th>Email</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {
-              admins.map(a => (
-                <tr>
-                  <td>{a.email}</td>
-                  <td>
+            {admins.map((a) => (
+              <tr key={a.id}>
+                <td>{a.name}</td>
+                <td>{a.email}</td>
+                <td>
                   <button
-                    className="btn btn-info btn-sm me-2">
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-warning btn-sm" >
+                    onClick={() => handleDelete(a.id)}
+                    className="btn btn-warning btn-sm"
+                  >
                     Delete
                   </button>
-                  </td>
-                </tr>
-              ))
-            }
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
