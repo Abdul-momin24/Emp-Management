@@ -143,6 +143,7 @@ const AddEmployee = () => {
               name="category"
               id="category"
               className="form-select"
+              value={" "}
               onChange={(e) =>
                 setEmployee({ ...employee, category_id: e.target.value })
               }
