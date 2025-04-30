@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-
+import logo from "../assets/logo-Photoroom.png";
 
 const EmployeeDetail = () => {
     const [employee, setEmployee] = useState([])
@@ -28,11 +28,17 @@ const EmployeeDetail = () => {
 
   return (
     <div>
-        <div className="p-2 d-flex justify-content-center shadow">
-            <h4>Emoployee Management System</h4>
+        <div className="p-2 d-flex justify-content-center shadow flex items-center justify-center  ">
+        <div className="flex-shrink-0 h-20  ">
+                    {/* Image container */}
+                    <img src={logo} className="object-cover h-full" alt="Logo" />
+                  </div>
+            <h4>Employee360</h4>
         </div>
         <div className='d-flex justify-content-center flex-column align-items-center mt-3'>
+        <div className="image  flex items-center justify-center  ">
             <img src={`http://localhost:3000/Images/`+employee.image} className='emp_det_image'/>
+        </div>
             <div className='d-flex align-items-center flex-column mt-5'>
                 <h3>Name: {employee.name}</h3>
                 <h3>Email: {employee.email}</h3>

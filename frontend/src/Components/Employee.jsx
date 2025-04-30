@@ -45,6 +45,7 @@ const Employee = () => {
               <th>Email</th>
               <th>Address</th>
               <th>Salary</th>
+              <th>Category</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -53,14 +54,18 @@ const Employee = () => {
               <tr>
                 <td>{e.name}</td>
                 <td>
+                <div className="h-12">
                   <img
                     src={`http://localhost:3000/Images/` + e.image}
-                    className="employee_image"
+                    className="employee_image  object-cover h-full rounded-full"
                   />
+
+                </div>
                 </td>
                 <td>{e.email}</td>
                 <td>{e.address}</td>
                 <td>{e.salary}</td>
+                <td>{e.category_id}</td>
                 <td>
                   <Link
                     to={`/dashboard/edit_employee/` + e.id}

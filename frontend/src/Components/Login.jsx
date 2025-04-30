@@ -67,6 +67,12 @@ const Login = () => {
                         />
                     </div>
 
+                     {error && (
+                        <div className="text-center text-sm text-gray-600 mt-2 cursor-pointer">
+                            Forgot your password?
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-md transition"
@@ -74,11 +80,7 @@ const Login = () => {
                         Log in
                     </button>
 
-                    {error && (
-                        <div className="text-center text-sm text-gray-600 mt-2">
-                            Forgot your password?
-                        </div>
-                    )}
+                   
                 </form>
             </div>
         </div>

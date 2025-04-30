@@ -67,6 +67,11 @@ const EmployeeLogin = () => {
                             required
                         />
                     </div>
+                    {error && (
+                        <div className="text-center text-sm text-gray-600 mt-2 cursor-pointer">
+                            Forgot your password?
+                        </div>
+                    )}
 
                     <button
                         type="submit"
