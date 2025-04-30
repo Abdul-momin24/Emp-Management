@@ -28,14 +28,14 @@ const EmployeeLogin = () => {
         navigate(-1);
     }
     return (
-        <div className='bg-gradient-to-br from-sky-600 to-cyan-500 p-4'>
+        <div className='min-h-screen bg-gradient-to-br from-sky-600 to-cyan-500 p-4'>
         <div className=''>
                         <button onClick={handleBack} style={{ display: 'flex', alignItems: 'center' }}>
                         <FaArrowLeft style={{ marginRight: '8px' }} />Back
                         </button>
         </div>
 
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
+            <div className="min-h-[85vh] flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Employee Login</h2>
                 
