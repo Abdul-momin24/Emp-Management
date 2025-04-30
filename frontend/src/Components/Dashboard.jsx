@@ -2,19 +2,23 @@ import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios";
+import logo from "../assets/logo-Photoroom.png";
 
 const Dashboard = () => {
-  const anvigate = useNavigate()
-  axios.defaults.withCredentials = true
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
+
   const handleLogout = () => {
-    axios.get('http://localhost:3000/auth/logout')
-    .then(result => {
-      if(result.data.Status) { 
-        localStorage.removeItem("valid")
-        anvigate('/')
-      }
-    })
-  }
+    axios
+      .get("http://localhost:3000/auth/logout")
+      .then((result) => {
+        if (result.data.Status) {
+          localStorage.removeItem("valid");
+          navigate("/");
+        }
+      });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">
@@ -24,6 +28,7 @@ const Dashboard = () => {
               to="/dashboard"
               className="d-flex align-items-center pb-3 mb-md-1 mt-md-3 me-md-auto text-white text-decoration-none"
             >
+              {/* Add logo here if you want */}
             </Link>
             <ul
               className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -44,9 +49,7 @@ const Dashboard = () => {
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-people ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">
-                    Manage Employees
-                  </span>
+                  <span className="ms-2 d-none d-sm-inline">Manage Employees</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -58,19 +61,8 @@ const Dashboard = () => {
                   <span className="ms-2 d-none d-sm-inline">Category</span>
                 </Link>
               </li>
-              <li className="w-100">
-                {/* <Link
-                  to="/dashboard/profile"
-                  className="nav-link px-0 align-middle text-white"
-                >
-                  <i className="fs-4 bi-person ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Profile</span>
-                </Link> */}
-              </li>
               <li className="w-100" onClick={handleLogout}>
-              <Link
-                  className="nav-link px-0 align-middle text-white"
-                >
+                <Link className="nav-link px-0 align-middle text-white">
                   <i className="fs-4 bi-power ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Logout</span>
                 </Link>
@@ -79,10 +71,13 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="col p-0 m-0">
-            <div className="p-2 d-flex justify-content-center shadow">
-                <h4>Emoployee Management System</h4>
+          <div className="p-2 flex justify-content-center items-center shadow">
+            <div className="flex-shrink-0  h-20"> {/* Image container */}
+              <img src={logo} className="object-cover  h-full" alt="Logo" />
             </div>
-            <Outlet />
+            <h4 className="text-xl">Employee360</h4>
+          </div>
+          <Outlet />
         </div>
       </div>
     </div>
