@@ -65,7 +65,7 @@ const Employee = () => {
                 <td>{e.email}</td>
                 <td>{e.address}</td>
                 <td>{e.salary}</td>
-                <td>{e.category_id}</td>
+                <td>{e.category_name}</td>
                 <td>
                   <Link
                     to={`/dashboard/edit_employee/` + e.id}
