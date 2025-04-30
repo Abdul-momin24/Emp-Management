@@ -37,7 +37,10 @@ const EmployeeDetail = () => {
         </div>
         <div className='d-flex justify-content-center flex-column align-items-center mt-3'>
         <div className="image  flex items-center justify-center  ">
-            <img src={`http://localhost:3000/Images/`+employee.image} className='emp_det_image'/>
+        <div className="flex-shrink-0 h-20 rounded-full ">
+            <img src={`http://localhost:3000/Images/`+employee.image} className='emp_det_image object-cover h-full rounded-full'/>
+
+        </div>
         </div>
             <div className='d-flex align-items-center flex-column mt-5'>
                 <h3>Name: {employee.name}</h3>
