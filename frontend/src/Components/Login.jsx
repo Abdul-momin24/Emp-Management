@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa'; 
 
 const Login = () => {
     const [values, setValues] = useState({ email: '', password: '' });
@@ -21,9 +22,19 @@ const Login = () => {
             })
             .catch(err => console.log(err));
     };
+    const handleBack = () => {
+    navigate(-1);
+}
 
     return (
+        <div className='bg-gradient-to-br from-sky-600 to-cyan-500 p-4'>
+            <div className=''>
+                <button onClick={handleBack} style={{ display: 'flex', alignItems: 'center' }}>
+                <FaArrowLeft style={{ marginRight: '8px' }} />Back
+                </button>
+            </div>
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
+        
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
                 
@@ -70,6 +81,7 @@ const Login = () => {
                     )}
                 </form>
             </div>
+        </div>
         </div>
     );
 };

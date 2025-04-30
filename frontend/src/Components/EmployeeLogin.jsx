@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { FaArrowLeft } from 'react-icons/fa'; 
 
 const EmployeeLogin = () => {
     const [values, setValues] = useState({ email: '', password: '' });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (event) => {
@@ -21,9 +23,18 @@ const EmployeeLogin = () => {
             })
             .catch(err => console.log(err));
     };
-
+    const handleBack = () => {
+        navigate(-1);
+    }
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
+        <div className='bg-gradient-to-br from-sky-600 to-cyan-500 p-4'>
+        <div className=''>
+                        <button onClick={handleBack} style={{ display: 'flex', alignItems: 'center' }}>
+                        <FaArrowLeft style={{ marginRight: '8px' }} />Back
+                        </button>
+        </div>
+
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-500 p-4">
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Employee Login</h2>
                 
@@ -56,13 +67,6 @@ const EmployeeLogin = () => {
                         />
                     </div>
 
-                    <div className="flex items-center space-x-2">
-                        <input type="checkbox" id="tick" className="w-4 h-4 text-sky-600 border-gray-300 rounded" />
-                        <label htmlFor="tick" className="text-sm text-gray-600">
-                            I agree to the terms & conditions
-                        </label>
-                    </div>
-
                     <button
                         type="submit"
                         className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-md transition"
@@ -72,6 +76,8 @@ const EmployeeLogin = () => {
                 </form>
             </div>
         </div>
+        </div>
+        
     );
 };
 
