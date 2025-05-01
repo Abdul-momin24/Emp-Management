@@ -12,7 +12,9 @@ const AddEmployee = () => {
     category_id: "",
     image: "",
   });
+
   const [category, setCategory] = useState([]);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,21 +24,59 @@ const AddEmployee = () => {
         if (result.data.Status) {
           setCategory(result.data.Result);
         } else {
-          console.log(result.data);
           alert(result.data.Error);
         }
       })
       .catch((err) => console.log(err));
   }, []);
 
+  const validateForm = () => {
+    const { name, email, password, salary, address, category_id, image } = employee;
+
+    if (!name.trim()) {
+      setError("Name is required.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return false;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return false;
+    }
+
+    if (!salary || isNaN(salary)) {
+      setError("Please enter a valid salary.");
+      return false;
+    }
+
+    if (!address.trim()) {
+      setError("Address is required.");
+      return false;
+    }
+
+    if (!category_id) {
+      setError("Please select a category.");
+      return false;
+    }
+
+    if (!image) {
+      setError("Please select an image before submitting.");
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if the image field is empty
-    if (!employee.image) {
-      alert("Please select an image before submitting.");
-      return;
-    }
+    if (!validateForm()) return;
 
     const formData = new FormData();
     formData.append("name", employee.name);
@@ -63,82 +103,73 @@ const AddEmployee = () => {
     <div className="d-flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border">
         <h3 className="text-center">Add Employee</h3>
+        {error && <div className="alert alert-danger">{error}</div>}
         <form className="row g-1" onSubmit={handleSubmit}>
           <div className="col-12">
-            <label htmlFor="inputName" className="form-label">
-              Name
-            </label>
+            <label htmlFor="inputName" className="form-label">Name</label>
             <input
               type="text"
               className="form-control rounded-0"
               id="inputName"
               placeholder="Enter Name"
+              value={employee.name}
               onChange={(e) =>
                 setEmployee({ ...employee, name: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputEmail4" className="form-label">
-              Email
-            </label>
+            <label htmlFor="inputEmail4" className="form-label">Email</label>
             <input
               type="email"
               className="form-control rounded-0"
               id="inputEmail4"
               placeholder="Enter Email"
-              autoComplete="off"
+              value={employee.email}
               onChange={(e) =>
                 setEmployee({ ...employee, email: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputPassword4" className="form-label">
-              Password
-            </label>
+            <label htmlFor="inputPassword4" className="form-label">Password</label>
             <input
               type="password"
               className="form-control rounded-0"
               id="inputPassword4"
               placeholder="Enter Password"
+              value={employee.password}
               onChange={(e) =>
                 setEmployee({ ...employee, password: e.target.value })
               }
             />
-            <label htmlFor="inputSalary" className="form-label">
-              Salary
-            </label>
+            <label htmlFor="inputSalary" className="form-label mt-2">Salary</label>
             <input
               type="text"
               className="form-control rounded-0"
               id="inputSalary"
               placeholder="Enter Salary"
-              autoComplete="off"
+              value={employee.salary}
               onChange={(e) =>
                 setEmployee({ ...employee, salary: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputAddress" className="form-label">
-              Address
-            </label>
+            <label htmlFor="inputAddress" className="form-label">Address</label>
             <input
               type="text"
               className="form-control rounded-0"
               id="inputAddress"
               placeholder="1234 Main St"
-              autoComplete="off"
+              value={employee.address}
               onChange={(e) =>
                 setEmployee({ ...employee, address: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="category" className="form-label">
-              Category
-            </label>
+            <label htmlFor="category" className="form-label">Category</label>
             <select
               name="category"
               id="category"
@@ -149,15 +180,13 @@ const AddEmployee = () => {
               }
             >
               <option value="">Select a category</option>
-              {category.map((c) => {
-                return <option value={c.id} key={c.id}>{c.name}</option>;
-              })}
+              {category.map((c) => (
+                <option value={c.id} key={c.id}>{c.name}</option>
+              ))}
             </select>
           </div>
           <div className="col-12 mb-3">
-            <label className="form-label" htmlFor="inputGroupFile01">
-              Select Image
-            </label>
+            <label className="form-label" htmlFor="inputGroupFile01">Select Image</label>
             <input
               type="file"
               className="form-control rounded-0"
